@@ -21,4 +21,5 @@ message InferResponse {
 service Compute {
     rpc Boot(BootRequest) returns (stream BootResponse);
     rpc Infer(InferRequest) returns (InferResponse);
+    rpc Test(InferRequest) returns (InferResponse);
 }

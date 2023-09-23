@@ -1,0 +1,30 @@
+name: Run protoc html doc Generater
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - "deepthought.proto"
+
+jobs:
+  protoc-doc:
+    permissions:
+      actions: write
+      checks: write
+      contents: write
+    name: Run protoc html doc Generate
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout current branch
+        uses: actions/checkout@v4
+      - name: Setup Golang
+        uses: actions/setup-go@v4
+        with:
+          go-version: "1.21.1"
+      - name: Install protoc-gen-doc
+        run: go install github.com/pseudomuto/protoc-gen-doc/cmd/protoc-gen-doc@latest
+      - name: Run Protoc Doc
+        run: protoc --doc_out=html,index.html:./docs deepthought.proto
+      - name: Commit and push changes
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: Update protoc-doc
