@@ -27,7 +27,7 @@ jobs:
       - name: Install protoc-gen-doc
         run: go install github.com/pseudomuto/protoc-gen-doc/cmd/protoc-gen-doc@latest
       - name: Run Protoc Doc
-        run: protoc --doc_out=html,index.html:./docs deepthought.proto
+        run: make proto-deepthought-doc
       - name: Commit and push changes
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
