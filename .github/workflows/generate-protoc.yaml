@@ -20,15 +20,16 @@ jobs:
         uses: actions/setup-go@v4
         with:
           go-version: "1.21.1"
-      - name: Install protoc-gen-go
-        run: go install google.golang.org/protobuf/cmd/protoc-gen-go@latest
-      - name: Install protoc-gen-go-grpc
-        run: go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@latest
-      - name: Install protoc-gen-doc
-        run: go install github.com/pseudomuto/protoc-gen-doc/cmd/protoc-gen-doc@latest
-      - name: Run Protoc Doc
-        run: make proto-deepthought-doc
-      - name: Commit and push changes
-        uses: stefanzweifel/git-auto-commit-action@v4
+      - name: Install Protoc
+        uses: arduino/setup-protoc@v2
+      - name: Generate Docs
+        run: |
+          go install github.com/pseudomuto/protoc-gen-doc/cmd/protoc-gen-doc@latest
+          which protoc-gen-doc
+          mkdir -p ./docs
+          protoc --doc_out=html,index.html:./docs deepthought.proto
+      - name: Add Doc Commit
+        uses: EndBug/add-and-commit@v9
         with:
-          commit_message: Update protoc-doc
+          add: ./docs/index.html
+          message: "doc: Update Protobuf Documentation"
