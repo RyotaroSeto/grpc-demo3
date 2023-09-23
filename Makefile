@@ -8,5 +8,5 @@ server:
 	go run ./go/server/*.go
 
 client:
-
+	go run ./go/client/main.go 127.0.0.1:13333
 
