@@ -13,16 +13,10 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - name: Build Swagger UI
-        uses: Legion2/swagger-ui-action@v1
-        with:
-          output: dist
-          spec-file: docs/index.html
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v2
         with:
-          path: dist
+          path: docs/index.html
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v2
