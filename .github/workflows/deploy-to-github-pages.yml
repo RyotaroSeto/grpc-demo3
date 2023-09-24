@@ -8,9 +8,9 @@ jobs:
     permissions:
       pages: write
       id-token: write
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+      actions: write
+      checks: write
+      contents: write
     runs-on: ubuntu-latest
     steps:
       - name: Push gh-pages branch
